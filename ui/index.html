@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600&display=swap" rel="stylesheet">
+</head>
+<body class="font-['Rajdhani']">
+    <div id="hud" class="fixed bottom-6 left-6 flex gap-2">
+        <div class="w-40 bg-black/70 p-2 rounded border border-white/10">
+            <div class="flex justify-between mb-1">
+                <div class="text-[#ff2e2e] text-sm font-semibold tracking-wider">HP</div>
+                <div id="health-text" class="text-[#ff2e2e] text-sm font-bold">100</div>
+            </div>
+            <div class="h-1 bg-black/40 overflow-hidden rounded-sm">
+                <div id="health-bar" class="h-full w-full bg-[#ff2e2e] transition-[width] duration-200"></div>
+            </div>
+        </div>
+
+        <div class="w-40 bg-black/70 p-2 rounded border border-white/10">
+            <div class="flex justify-between mb-1">
+                <div class="text-[#3689ff] text-sm font-semibold tracking-wider">AP</div>
+                <div id="armor-text" class="text-[#3689ff] text-sm font-bold">100</div>
+            </div>
+            <div class="h-1 bg-black/40 overflow-hidden rounded-sm">
+                <div id="armor-bar" class="h-full w-full bg-[#3689ff] transition-[width] duration-200"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('message', e => {
+            if (e.data.action === 'updateStatus') {
+                ['health', 'armor'].forEach(stat => {
+                    document.getElementById(`${stat}-bar`).style.width = `${e.data[stat]}%`;
+                    document.getElementById(`${stat}-text`).textContent = Math.floor(e.data[stat]);
+                });
+            }
+        });
+    </script>
+</body>
+</html> 
